@@ -5,9 +5,9 @@ const orderController = {
   // Tạo 1 đơn hàng
   createOne: async (req, res) => {
     try {
-      const { userId, items } = req.body;
+      const {  items } = req.body;
 
-      const cart = await Cart.findOne({ userId: userId });
+      const cart = await Cart.findOne({ userId: req.user._id });
       const cartItems = cart.items;
       for (let i = 0; i < items.length; i++) {
         const index = cartItems.findIndex((cartItem) => {

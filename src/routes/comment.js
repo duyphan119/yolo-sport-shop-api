@@ -1,9 +1,9 @@
 const commentController = require("../controllers/commentController");
+const { verifyToken } = require("../middlewares/authMiddleware");
 
 const router = require("express").Router();
 router.get("/product/:id", commentController.getByProduct);
-// router.get("/:id", commentController.getById);
-router.post("/", commentController.createOne);
-router.put("/:id", commentController.updateOne);
-router.delete("/:id", commentController.deleteOne);
+router.post("/", verifyToken, commentController.createOne);
+router.put("/:id", verifyToken, commentController.updateOne);
+router.delete("/:id", verifyToken, commentController.deleteOne);
 module.exports = router;

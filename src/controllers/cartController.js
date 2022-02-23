@@ -3,8 +3,8 @@ const cartController = {
   // Thêm giỏ hàng
   addToCart: async (req, res) => {
     try {
-      const { userId, productId, quantity, size } = req.body;
-      const userCart = await Cart.findOne({ userId: userId });
+      const { productId, quantity, size } = req.body;
+      const userCart = await Cart.findOne({ userId: req.user._id });
       if (userCart) {
         const { items } = userCart;
         const index = items.findIndex(
@@ -43,7 +43,7 @@ const cartController = {
         // Nếu người dùng chưa tạo giỏ hàng
         const newCart = new Cart({
           items: [{ productId, quantity, size }],
-          userId: userId,
+          userId: req.user._id,
         });
         await newCart.save();
       }
